@@ -1,35 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Fragment, useState } from "react";
+import Header from "./components/header";
+import Footer from "./components/Footer";
+import { Link, Route, Routes } from "react-router-dom";
+import Home from "./components/Home";
+import About from "./components/About";
+
+const routes = [
+  {
+    name: "Home",
+    path: "/",
+    element: <Home />,
+    display: false,
+  },
+  {
+    name: "About",
+    path: "/about",
+    element: <About />,
+    display: false,
+  },
+];
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="flex flex-col min-h-screen ">
+      <Header>
+        <div className="flex gap-4">
+          {routes.map((route, index) => (
+            <Fragment key={index}>
+              {route.display && (
+                <Link to={route.path} className="hover:text-secondary">
+                  {route.name}
+                </Link>
+              )}
+            </Fragment>
+          ))}
+        </div>
+      </Header>
+      <div className="flex-grow container mx-auto">
+        <Routes>
+          {routes.map((route, index) => (
+            <Route key={index} path={route.path} element={route.element} />
+          ))}
+        </Routes>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      <Footer />
+    </div>
+  );
 }
 
-export default App
+export default App;
