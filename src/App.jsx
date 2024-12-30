@@ -4,6 +4,8 @@ import Footer from "./components/Footer";
 import { Link, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import About from "./components/About";
+import Admin from "./components/Admin";
+import PostContentPage from "./components/PostContentPage";
 
 const routes = [
   {
@@ -16,6 +18,18 @@ const routes = [
     name: "About",
     path: "/about",
     element: <About />,
+    display: false,
+  },
+  {
+    name: "Admin",
+    path: "/admin",
+    element: <Admin />,
+    display: false,
+  },
+  {
+    name: "post",
+    path: "/post/:id",
+    element: <PostContentPage />,
     display: false,
   },
 ];

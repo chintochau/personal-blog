@@ -1,10 +1,11 @@
 import { MapPin } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import BlogPosts from "./BlogPosts";
 
 const Home = () => {
   return (
     <>
-      <div className="pt-10 motion-preset-slide-left flex items-center motion-delay-[200ms]">
+      <div className="pt-10 motion-preset-slide-left flex items-center motion-delay-[200ms] max-w-96">
         <MapPin className="size-5" />
         <span className="ml-1 font-semibold text-sm">Toronto, Canada</span>
       </div>
@@ -24,7 +25,7 @@ const Home = () => {
         .
       </p>
 
-      <p className="mt-4 motion-preset-slide-left motion-delay-[1500ms]">
+      <p className="mt-4 motion-preset-slide-left motion-delay-[1500ms] max-w-[600px]">
         Throughout my career, I’ve gained hands-on experience in product
         development, collaborating with cross-functional teams to define
         features, prioritize work, and ensure products meet user needs. I thrive
@@ -33,11 +34,13 @@ const Home = () => {
         contributing to the overall product strategy.
       </p>
 
-      <p className="mt-4 motion-preset-slide-left motion-delay-[2000ms]">
+      <p className="mt-4 motion-preset-slide-left motion-delay-[2000ms] max-w-[600px]">
         I'm passionate about understanding user needs, and I approach every
         project with a product management mindset, ensuring that the end result
         aligns with both business goals and user satisfaction.
       </p>
+
+      <BlogPosts />
     </>
   );
 };
