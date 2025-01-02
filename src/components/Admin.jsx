@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
-import { createBlogPost, getBlogPosts } from "../services/blogServices";
+import {
+  createBlogPost,
+  getBlogPosts,
+  uploadBlogFile,
+  getAllFiles,
+} from "../services/blogServices";
 import BlogPosts from "./BlogPosts";
+import { useBlogPosts } from "../contexts/BlogPostsContext";
 const password = import.meta.env.VITE_ADMIN_PASSWORD;
 
 const samplePostData = {
@@ -12,12 +18,24 @@ const samplePostData = {
 };
 
 const Admin = () => {
+  const [file, setFile] = useState(null);
+  const { fileList } = useBlogPosts();
+
   return (
     <div>
       <Button onClick={() => createBlogPost(samplePostData)}>
         Create Sample Post
       </Button>
-      <BlogPosts adminMode/>
+      <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+      <p>{file && file.name}</p>
+      <Button
+        onClick={() => {
+          uploadBlogFile(file);
+        }}
+      >
+        Upload
+      </Button>
+      <BlogPosts adminMode />
     </div>
   );
 };
