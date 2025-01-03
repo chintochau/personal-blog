@@ -8,6 +8,7 @@ import {
 } from "../services/blogServices";
 import BlogPosts from "./BlogPosts";
 import { useBlogPosts } from "../contexts/BlogPostsContext";
+import CDNFiles from "./admin-page/CDNFiles";
 const password = import.meta.env.VITE_ADMIN_PASSWORD;
 
 const samplePostData = {
@@ -26,16 +27,9 @@ const Admin = () => {
       <Button onClick={() => createBlogPost(samplePostData)}>
         Create Sample Post
       </Button>
-      <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-      <p>{file && file.name}</p>
-      <Button
-        onClick={() => {
-          uploadBlogFile(file);
-        }}
-      >
-        Upload
-      </Button>
+
       <BlogPosts adminMode />
+      <CDNFiles />
     </div>
   );
 };

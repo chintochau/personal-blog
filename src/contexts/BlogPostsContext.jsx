@@ -6,24 +6,28 @@ const BlogPostsProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [blogPosts, setBlogPosts] = useState([]);
   const [fileList, setFileList] = useState([]);
+  const [shouldRefresh, setShouldRefresh] = useState(true);
+  const [shouldRefreshPost, setShouldRefreshPost] = useState(true);
 
   useEffect(() => {
-    getBlogPosts().then((data) => {
-      setBlogPosts(data);
-    });
-    return () => {
-      setBlogPosts([]);
-    };
-  }, []);
+    if (shouldRefreshPost) {
+      getBlogPosts().then((data) => {
+        setBlogPosts(data);
+      });
+      setShouldRefreshPost(false);
+    }
+  }, [shouldRefreshPost]);
 
-    useEffect(() => {
-      if (fileList.length === 0) {
-        getAllFiles().then((data) => {
-          console.log(data.files);
-          setFileList(data.files);
-        });
-      }
-    }, [fileList]);
+  useEffect(() => {
+    if (fileList.length === 0 || shouldRefresh) {
+      getAllFiles().then((data) => {
+        setFileList(data.files);
+      });
+      setShouldRefresh(false);
+    }
+  }, [fileList, shouldRefresh]);
+
+  const imageList = fileList.filter((file) => file.name.endsWith( ".jpg") || file.name.endsWith( ".png"));
 
   const value = {
     blogPosts,
@@ -31,7 +35,11 @@ const BlogPostsProvider = ({ children }) => {
     loading,
     setLoading,
     fileList,
-    setFileList
+    setFileList,
+    setShouldRefresh,
+    imageList,
+    shouldRefreshPost,
+    setShouldRefreshPost
   };
 
   return (
